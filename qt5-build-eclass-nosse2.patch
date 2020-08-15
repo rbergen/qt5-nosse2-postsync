@@ -1,0 +1,31 @@
+*** qt5-build.eclass.orig	2019-11-22 12:32:57.190494836 +0100
+--- qt5-build.eclass	2019-11-22 12:32:06.913885380 +0100
+***************
+*** 110,116 ****
+  	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
+  esac
+  
+! IUSE="debug test"
+  
+  [[ ${QT5_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
+  
+--- 110,116 ----
+  	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
+  esac
+  
+! IUSE="cpu_flags_x86_sse2 debug test"
+  
+  [[ ${QT5_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
+  
+***************
+*** 554,559 ****
+--- 554,562 ----
+  		$(is-flagq -mno-dsp   && echo -no-mips_dsp)
+  		$(is-flagq -mno-dspr2 && echo -no-mips_dspr2)
+  
++ 		# Check for availability of SSE2 and switch off if necessary
++ 		$(use cpu_flags_x86_sse2 || echo -no-sse2)
++ 		
+  		# use pkg-config to detect include and library paths
+  		-pkg-config
+  

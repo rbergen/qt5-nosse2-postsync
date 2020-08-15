@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# Post-sync script to apply -no-sse2 config option to Qt5 builds
+# in case the sse2 CPU flag is not set in CPU_FLAGS_X86 for the builds
+# in question. This can make Qt5 work on systems with older CPUs
+# without SSE2 capability (e.g. Pentium3) where they otherwise 
+# wouldn't. Typically, on such systems illegal instruction (SIGILL)
+# errors would occur, for instance while compiling Qt5 packages.
+# Please note that not all Qt5 packages can be made to work on older 
+# systems with this option. QtWebEngine, for instance, will not.
+# 
+# This script needs to be placed in the /etc/portage/repo.postsync.d
+# directory with the executable bit set (chmod a+x <filename>),
+# together with the actual patch file for the qt5-build.eclass file. 
+# The patch file needs to be called qt5-build-eclass-nosse2.patch and
+# must *not* have the executable bit set.
+# The script will only execute after a sync of the gentoo repo, and
+# apply the patch only after a successful dry run.
+#
+# Although care is taken to prevent unintended side effects, this script
+# and the accompanying patch file are provided as-is. Using them is done
+# at your own risk.
+#
+repository_name=${1}
+#sync_uri=${2}
+repository_path=${3}
+
+ret=0
+
+# Only execute post-sync for gentoo repository
+[ "${repository_name}" == "gentoo" ] || exit "${ret}"
+
+echo_prefix=">>> "
+
+echo "${echo_prefix}Applying qt5-build.eclass -no-sse2 patch..."
+ 
+eclass_path="${repository_path}/eclass/qt5-build.eclass"
+patch_path="/etc/portage/repo.postsync.d/qt5-build-eclass-nosse2.patch"
+
+if [ ! -f ${patch_path} ]; then
+	echo "${echo_prefix}...patch file '${patch_path}' missing, skipped"
+elif patch -sN --dry-run "${eclass_path}" <${patch_path} ; then
+	patch -sN "${eclass_path}" <${patch_path}
+	ret=$?
+
+	if [ "${ret}" == "0" ]; then
+		echo "${echo_prefix}...patch completed"
+	else
+		echo "${echo_prefix}...patch FAILED after successful dry run!"
+	fi
+else
+	echo "${echo_prefix}...patch dry run failed, skipped"
+fi
+
+# Return explicit status.
+exit "${ret}"
