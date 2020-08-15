@@ -1,6 +1,6 @@
 # Gentoo emerge patch: make Qt5 build on older systems without SSE2
 
-Regardless of what is set in CPU_FLAGS_X86, on Gentoo, Qt5 packages are built in such a way that they require SSE2 support. This means that on pre-SSE2 CPU, illegal instruction (SIGILL) errors occur while trying to emerge packages depending on Qt5.
+Regardless of what is set in CPU_FLAGS_X86, on Gentoo, Qt5 packages are built in such a way that they require SSE2 support. This means that on pre-SSE2 CPUs, illegal instruction (SIGILL) errors occur while trying to emerge packages depending on Qt5.
 
 The Qt5 build system includes a config option -no-sse2 to explicitly switch off Qt5 dependency on SSE2, but the Qt5 packages provided by Gentoo do not seem to provide any means to set this config option. At some point work-arounds have been included and then reverted by the Qt5 maintainers (as documented in [Gentoo bug 552942](https://bugs.gentoo.org/552942), for example), but as things stand there seems to be no supported way to address this. I am confident that the reasons for this are valid from a maintainer's perspective.
 
