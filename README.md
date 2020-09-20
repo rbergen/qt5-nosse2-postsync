@@ -24,7 +24,7 @@ The script:
 * reports success or failure, when run.
 
 Furthermore:
-* Future changes to the qt5-build.eclass file as provided by Gentoo may make the patch unusable, although I will try to maintain the patch at least as long as my Pentium3 system  remains alive;
+* Future changes to the qt5-build.eclass file as provided by Gentoo may make the patch unusable, although I will try to maintain the patch at least as long as my Pentium3 system remains alive;
 * Not all Qt5 packages will build on older systems with the patch applied. QtWebEngine, for instance, will still refuse to build;
 * If you do run into problems, please reach out and I'll see what I can do to help.
 
