@@ -4,7 +4,7 @@ Regardless of what is set in CPU_FLAGS_X86, on Gentoo, Qt5 packages are built in
 
 The Qt5 build system includes a config option -no-sse2 to explicitly switch off Qt5 dependency on SSE2, but the Qt5 packages provided by Gentoo do not seem to provide any means to set this config option. At some point work-arounds have been included and then reverted by the Qt5 maintainers (as documented in [Gentoo bug 552942](https://bugs.gentoo.org/552942), for example), but as things stand there seems to be no supported way to address this. I am confident that the reasons for this are valid from a maintainer's perspective.
 
-Because that did not change my wish to build Qt5 packages on my Pentium3 system, I have created a way to do so, using facilities provided by the portage build system.
+Because that did not change my wish to build Qt5 packages on my Pentium3 system, I have created a way to do so, using facilities provided by the portage build system.  
 Concretely, it provides for the -no-sse2 option to be passed to the Qt5 build config when the sse2 CPU flag is not set in CPU_FLAGS_X86. It does this by running a post-sync script that applies a patch to the qt5-build.eclass file provided in the "gentoo" repository. The original version of the patch was attached to [Gentoo bug 648004](https://bugs.gentoo.org/648004), this version has been aligned with the version of qt5-build.eclass that was then current.
 
 ## Installing
