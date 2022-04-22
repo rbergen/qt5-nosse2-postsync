@@ -32,5 +32,6 @@ Furthermore:
 
 * **Felix Tiede** - *Original version of the qt5-build.eclass patch*
 * **eccerr0r** on [Gentoo forums](https://forums.gentoo.org) - *Bringing [Gentoo bug 648004](https://bugs.gentoo.org/648004) back to memory.*
+* **[goshhhy](https://github.com/goshhhy)** - *Update to the .eclass patch*
 
 _- Rutger van Bergen - [github.com/rbergen](https://github.com/rbergen)_
